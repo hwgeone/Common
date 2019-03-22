@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{71751C13-1611-436F-810C-3B3495B912DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure</RootNamespace>
+    <AssemblyName>Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NetJSON, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetJSON.1.0.15\lib\net40\NetJSON.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NReco.PivotData, Version=1.3.7.0, Culture=neutral, PublicKeyToken=9ad162d4af1a824f, processorArchitecture=MSIL">
+      <HintPath>packages\NReco.PivotData.1.3.7\lib\net40\NReco.PivotData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NReco.PivotData.Extensions, Version=1.3.6.0, Culture=neutral, PublicKeyToken=9ad162d4af1a824f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\NReco.PivotData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Words.NET, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DocX.1.2.1\lib\Xceed.Words.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActiveDirectory\ActiveDirectoryConfiguration.cs" />
+    <Compile Include="ActiveDirectory\ActiveDirectoryConnector.cs" />
+    <Compile Include="ActiveDirectory\UserPrincipalEx.cs" />
+    <Compile Include="CacheHelper\CacheContext.cs" />
+    <Compile Include="CacheHelper\CacheProvider.cs" />
+    <Compile Include="CacheHelper\ICacheContext.cs" />
+    <Compile Include="CacheHelper\ObjCacheProvider.cs" />
+    <Compile Include="ConvertorHelper\Convertor.cs" />
+    <Compile Include="ConvertorHelper\ConvertorHelper.cs" />
+    <Compile Include="ConvertorHelper\Verifier.cs" />
+    <Compile Include="Dapper.Data\DBFactory.cs" />
+    <Compile Include="Dapper.Data\DBTypeExtenstions.cs" />
+    <Compile Include="Dapper.Data\IRepository.cs" />
+    <Compile Include="Dapper.Data\ManagerBase.cs" />
+    <Compile Include="Dapper.Data\ConnectionProvidor.cs" />
+    <Compile Include="Dapper.Data\Pager.cs" />
+    <Compile Include="Dapper.Data\Repository.cs" />
+    <Compile Include="Dapper.Data\ServiceBase.cs" />
+    <Compile Include="Dapper.Data\Session.cs" />
+    <Compile Include="Dapper.Data\SessionFactory.cs" />
+    <Compile Include="Dapper.Data\UpgradedRepository.cs" />
+    <Compile Include="Dapper\DefaultParameterCharacter.cs" />
+    <Compile Include="Dapper\Extensions\DapperExtensions.cs" />
+    <Compile Include="Dapper\Extensions\DapperExtensionsConfiguration.cs" />
+    <Compile Include="Dapper\Extensions\DapperImplementor.cs" />
+    <Compile Include="Dapper\Extensions\Database.cs" />
+    <Compile Include="Dapper\Extensions\GetMultiplePredicate.cs" />
+    <Compile Include="Dapper\Extensions\GetMultipleResult.cs" />
+    <Compile Include="Dapper\Extensions\Mapper\AutoClassMapper.cs" />
+    <Compile Include="Dapper\Extensions\Mapper\PluralizedAutoClassMapper.cs" />
+    <Compile Include="Dapper\Extensions\Mapper\ClassMapper.cs" />
+    <Compile Include="Dapper\Extensions\Mapper\PropertyMap.cs" />
+    <Compile Include="Dapper\Extensions\Predicates.cs" />
+    <Compile Include="Dapper\Extensions\ReflectionHelper.cs" />
+    <Compile Include="Dapper\Extensions\Sql\KingbaseSqlDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\MySqlDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\OracleSqlDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\PostgreSqlDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\SqlCeDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\SqlDialectBase.cs" />
+    <Compile Include="Dapper\Extensions\Sql\SqlGenerator.cs" />
+    <Compile Include="Dapper\Extensions\Sql\SqliteDialect.cs" />
+    <Compile Include="Dapper\Extensions\Sql\SqlServerDialect.cs" />
+    <Compile Include="Dapper\SqlBuilder.cs" />
+    <Compile Include="Dapper\SqlMapper.cs" />
+    <Compile Include="Disposable.cs" />
+    <Compile Include="EF\EntityBase.cs" />
+    <Compile Include="EF\IRepository.cs" />
+    <Compile Include="EF\IUnitWork.cs" />
+    <Compile Include="EmailHelper\Email.cs" />
+    <Compile Include="EmailHelper\Emailhelper.cs" />
+    <Compile Include="EmailHelper\KeyObject.cs" />
+    <Compile Include="EmailHelper\MailToHelper.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="EWSHelper\ExchangeTool.cs" />
+    <Compile Include="EWSHelper\ItemManager.cs" />
+    <Compile Include="EWSHelper\Service.cs" />
+    <Compile Include="EWSHelper\TraceListener.cs" />
+    <Compile Include="EWSHelper\UrlValidator.cs" />
+    <Compile Include="ExcelHelper\AutoBuildResumeID.cs" />
+    <Compile Include="ExcelHelper\ExcelHelper.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="FileHelper\FileHelper.cs" />
+    <Compile Include="GenericHelpers.cs" />
+    <Compile Include="HttpHelper\HttpHelper.cs" />
+    <Compile Include="HttpHelper\RestHelper.cs" />
+    <Compile Include="HttpHelper\JsonUtils.cs" />
+    <Compile Include="MD5\MD5Helper.cs" />
+    <Compile Include="MessageQueueHelper\JsonMessageFormatter.cs" />
+    <Compile Include="MessageQueueHelper\MessageQueueBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MessageQueueHelper\MessageReceivedEventArgs.cs" />
+    <Compile Include="ObjectHelper.cs" />
+    <Compile Include="Password\CryptoServiceRandom.cs" />
+    <Compile Include="Password\EmbeddedTrigramStatistics.cs" />
+    <Compile Include="Password\ITrigramStatistics.cs" />
+    <Compile Include="Password\PasswordGenerator.cs" />
+    <Compile Include="Password\PronounceableGenerator.cs" />
+    <Compile Include="Password\Random.cs" />
+    <Compile Include="Password\SerializableTrigramStatistics.cs" />
+    <Compile Include="Password\Sets.cs" />
+    <Compile Include="Password\WeightedItem.cs" />
+    <Compile Include="PivotHelper\CacheCubeWrapper.cs" />
+    <Compile Include="PivotHelper\ICube.cs" />
+    <Compile Include="PivotHelper\InMemoryCube.cs" />
+    <Compile Include="PivotHelper\PivotDataFileCube.cs" />
+    <Compile Include="PivotHelper\PivotRepository.cs" />
+    <Compile Include="PivotHelper\PivotTableReportConfig.cs" />
+    <Compile Include="PivotHelper\SimpleCube.cs" />
+    <Compile Include="PivotHelper\SqlCube.cs" />
+    <Compile Include="PivotHelper\SqlGroupByCube.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ElementTypeHelper.cs" />
+    <Compile Include="Reflection\PrimitiveExtensions.cs" />
+    <Compile Include="Reflection\PrimitiveHelper.cs" />
+    <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="RegexUtilities\RegexUtilities.cs" />
+    <Compile Include="StringHelper\StringHelper.cs" />
+    <Compile Include="TimeHelper\TimeHelper.cs" />
+    <Compile Include="TreeItem.cs" />
+    <Compile Include="WordHepler\WordHelper.cs" />
+    <Compile Include="XmlHelper\XMLHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DLL\NReco.PivotData.Extensions.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

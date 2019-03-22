@@ -1,0 +1,1093 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NReco.PivotData</name>
+    </assembly>
+    <members>
+        <member name="T:NReco.PivotData.AverageAggregator">
+            <summary>
+            Implements an average value aggregator.
+            </summary>
+            <remarks>
+            AverageAggregator can be used only with numeric values that may be coverted to System.Decimal.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.AverageAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.AverageAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.CompositeAggregator">
+            <summary>
+            Implements a composite aggregator that incapsulates list of aggregators.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.CompositeAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.CompositeAggregator"/> factory component.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.AggregatorExtensions.AsComposite(NReco.PivotData.IAggregator)">
+            <summary>
+            Returns the <see cref="T:NReco.PivotData.IAggregator"/> as <see cref="T:NReco.PivotData.CompositeAggregator"/> instance. 
+            </summary>
+            <remarks>
+            This method is useful for accessing atomic and composite aggregators in the same way.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.CountAggregator">
+            <summary>
+            Implements a counting aggregator.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.CountAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.CountAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.CountUniqueAggregator">
+            <summary>
+            Implements aggregator that counts only unique values.
+            </summary>
+            <remarks>
+            CountUniqueAggregator collects unique values of some field. It can be used with any types.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.CountUniqueAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.CountUniqueAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.CustomSortKeyComparer">
+            <summary>
+            <see cref="T:NReco.PivotData.ValueKey"/> comparer based on individual dimension comparers.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.CustomSortKeyComparer.#ctor(System.Collections.Generic.IComparer{System.Object}[])">
+            <summary>
+            Initializes new instance of <see cref="T:NReco.PivotData.CustomSortKeyComparer"/> with specified dimension comparers.
+            </summary>
+            <param name="dimComparers">array of dimension comparers</param>
+            <remarks>If ValueKey has more dimensions than dimension comparers default <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> is used.</remarks>
+        </member>
+        <member name="T:NReco.PivotData.FormulaAggregator">
+            <summary>
+            Implements a formula aggregator calculated from other aggregators.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.FormulaAggregatorFactory">
+            <summary>
+            Factory for <see cref="T:NReco.PivotData.FormulaAggregator"/>.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.IAggregator">
+            <summary>
+            Represents measure aggregator.
+            </summary>
+            <remarks>
+            Aggregator implements common API for handling various types of measures:
+            <list type="bullet">
+            <item>
+            	<description>measure calculation (Push method)</description>
+            </item>
+            <item>
+            	<description>accessing current measure value (Value and Count properties)</description>
+            </item>
+            <item>
+            	<description>combining 2 measures of the same type (Merge method)</description>
+            </item>
+            <item>
+            	<description>provide compact measure data for serialization (GetState method)</description>
+            </item>
+            </list>
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.IAggregator.Push(System.Object,System.Func{System.Object,System.String,System.Object})">
+            <summary>
+            Modifies aggregator value by processing specified fact (data record)
+            </summary>
+            <param name="v">data record</param>
+            <param name="getValue">field value accessor delegate</param>
+        </member>
+        <member name="P:NReco.PivotData.IAggregator.Value">
+            <summary>
+            Current aggregator value
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IAggregator.Count">
+            <summary>
+            Number of facts (data records) used for calculating aggregator value
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.IAggregator.Merge(NReco.PivotData.IAggregator)">
+            <summary>
+            Modifies current instance of aggregator by merging with specified compatible aggregator
+            </summary>
+            <param name="aggr">compatible aggregator to merge (should have the same type)</param>
+        </member>
+        <member name="M:NReco.PivotData.IAggregator.GetState">
+            <summary>
+            Returns an object that represents compacted "raw" aggregator state
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.IAggregatorFactory">
+            <summary>
+            Represents measure aggregator factory.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.IAggregatorFactory.Create">
+            <summary>
+            Creates a new instance of measure aggregator.
+            </summary>
+            <returns>new aggregator instance (empty)</returns>
+        </member>
+        <member name="M:NReco.PivotData.IAggregatorFactory.Create(System.Object)">
+            <summary>
+            Creates a new instance of measure aggregator and initialize it with specified measure state object.
+            </summary>
+            <param name="state">state object</param>
+            <returns>aggregator instance initialized with specified measure value</returns>
+        </member>
+        <member name="T:NReco.PivotData.IPivotData">
+            <summary>
+            Represents an abstract mutlidimensional array.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotData.Dimensions">
+            <summary>
+            List of dimensions.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotData.AggregatorFactory">
+            <summary>
+            Aggregator factory used for creating measure values.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotData.Item(System.Object[])">
+            <summary>
+            Returns aggregated value by specified keys.
+            </summary>
+            <param name="dimKeys">array of dimension keys</param>
+            <returns>aggregated value</returns>
+        </member>
+        <member name="P:NReco.PivotData.IPivotData.Count">
+            <summary>
+            Gets the number of values (data points) in the <see cref="T:NReco.PivotData.IPivotData"/>.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.IPivotData.GetEnumerator">
+            <summary>
+            Returns an enumerator that can be used to iterate through <see cref="T:NReco.PivotData.IPivotData"/> values (data points). 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NReco.PivotData.IPivotTable">
+            <summary>
+            Represents an abstract pivot table model.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotTable.Columns">
+            <summary>
+            Dimensions for pivot table columns.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotTable.Rows">
+            <summary>
+            Dimensions for pivot table rows. 
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotTable.ColumnKeys">
+            <summary>
+            Gets the collection of column keys.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotTable.RowKeys">
+            <summary>
+            Gets the collection of row keys.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.IPivotTable.PivotData">
+            <summary>
+            Gets the underlying <see cref="T:NReco.PivotData.IPivotData"/> instance.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.IPivotTable.GetValue(NReco.PivotData.ValueKey,NReco.PivotData.ValueKey)">
+            <summary>
+            Gets value for specified row and column keys. 
+            </summary>
+            <param name="rowKey">row key (use partial key for sub-totals or null for column total)</param>
+            <param name="colKey">column key (use partial key for sub-totals or null for row total)</param>
+            <returns></returns>
+        </member>
+        <member name="T:NReco.PivotData.Key">
+            <summary>
+            Dimension key helper
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ListAggregator">
+            <summary>
+            Implements aggregator that returns list of grouped source objects.
+            </summary>
+            <remarks>
+            ListAggregator can be used with any type of objects. It is useful if you need to keep references to source objects (like LINQ GroupBy) or row IDs.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.ListAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.ListAggregator"/> factory component.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.ListAggregatorFactory.#ctor">
+            <summary>
+            Initializes a list aggregator factory that collects references to source objects.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.ListAggregatorFactory.#ctor(System.String)">
+            <summary>
+            Initializes a list aggregator factory that collects all values of specified field.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ListUniqueAggregator">
+            <summary>
+            Implements aggregator that returns sorted list of unique field values
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ListUniqueAggregatorFactory">
+            <summary>
+            Factory class for <see cref="T:NReco.PivotData.ListUniqueAggregator"/>
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.ListUniqueAggregatorFactory.#ctor(System.String)">
+            <summary>
+            Initializes new instance of ListUniqueAggregatorFactory
+            </summary>
+            <param name="field">field name</param>
+        </member>
+        <member name="T:NReco.PivotData.MaxAggregator">
+            <summary>
+            Implements a maximum value aggregator
+            </summary>
+            <remarks>
+            MaxAggregator can be used only with values that implement IComparable interface.
+            </remarks>		
+        </member>
+        <member name="T:NReco.PivotData.MaxAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.MaxAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.MinAggregator">
+            <summary>
+            Implements a minimum value aggregator.
+            </summary>
+            <remarks>
+            MinAggregator can be used only with values that implement IComparable interface.
+            </remarks>		 
+        </member>
+        <member name="T:NReco.PivotData.MinAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.MinAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ModeAggregator">
+            <summary>
+            Implements a mode aggregator: calculates value that appears most often.
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ModeAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.ModeAggregator"/> factory component.
+            </summary>
+            <example>new ModeAggregatorFactory("employee_age")</example>
+        </member>
+        <member name="M:NReco.PivotData.ModeAggregatorFactory.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.ModeAggregatorFactory"/> for the specified field (single-value mode).
+            </summary>
+            <param name="field">field name</param>
+        </member>
+        <member name="M:NReco.PivotData.ModeAggregatorFactory.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.ModeAggregatorFactory"/> for the specified field and mode type (single or multi-value).
+            </summary>
+            <param name="field">field name</param>
+            <param name="multimodal">if true mode value is an array that can contain several mode values.</param>
+        </member>
+        <member name="T:NReco.PivotData.NaturalSortKeyComparer">
+            <summary>
+            Implements lexicographical comparison for any 2 objects (A-Z or Z-A).
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.NaturalSortKeyComparer.Instance">
+            <summary>
+            Represents an instance of <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> for lexicographical comparison (A-Z).
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.NaturalSortKeyComparer.ReverseInstance">
+            <summary>
+            Represents an instance of <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> for reverse lexicographical comparison (Z-A).
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.NaturalSortKeyComparer.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> instance for lexicographical comparison (A-Z).
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.NaturalSortKeyComparer.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> instance for reverse lexicographical comparison (Z-A).
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ObjectMember">
+            <summary>
+            Provides fast access to the object's public member (property, field or indexer) by name.
+            </summary>
+            <remarks>
+            ObjectMember instance uses Expression-based approach for accessing any object properties in the fastest way:
+            <code>
+            object arr = new [] { "A", "B", "C" };
+            var objMember = new ObjectMember();
+            object arrLen = objMember.GetValue(arr, "Length"); // arrLen=3
+            </code>
+            ObjectMember is useful for grouping typed lists with <see cref="M:NReco.PivotData.PivotData.ProcessData(System.Collections.IEnumerable,System.Func{System.Object,System.String,System.Object})"/>.
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.ObjectMember.GetValue(System.Object,System.String)">
+            <summary>
+            Returns the member value (property, field or indexer) of the specified object.
+            </summary>
+            <param name="o">The object whose member value will be returned.</param>
+            <param name="name">property name, field name or indexer parameter</param>
+            <returns>The member value of the specified object.</returns>
+        </member>
+        <member name="T:NReco.PivotData.PivotData">
+            <summary>
+            Implements generic dictionary-based in-memory high performance multidimensional dataset (OLAP cube).
+            </summary>
+            <remarks>
+            <para>
+            <see cref="T:NReco.PivotData.PivotData"/> can be used for fast data aggregation from any input source that implements <see cref="T:System.Collections.IEnumerable"/> interface.
+            <para>
+            Totals may be pre-calculated during data processing or calulated on-the-fly on the first access (<see cref="P:NReco.PivotData.PivotData.LazyTotals"/>).
+            Lazy totals calculation mode is recommended for cases when cube has many dimensions and/or large number of unique dimension keys.
+            </para>
+            <para>Thread safety: a <see cref="T:NReco.PivotData.PivotData"/> can support multiple readers concurrently, as long as the data is not modified. 
+            To allow the collection to be accessed by multiple threads for reading and writing, you must implement your own synchronization.
+            When data is processed with <see cref="M:NReco.PivotData.PivotData.ProcessData(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}})"/> enumerating through 
+            <see cref="P:NReco.PivotData.PivotData.AllValues"/> or <see cref="M:NReco.PivotData.PivotData.GetEnumerator"/> is intrinsically not a thread-safe procedure.</para>
+            <example>
+            The following code illustrates how to aggregate data from DataTable:
+            <code>DataTable dataTbl; // lets assume it has columns: 'Delivery Year', 'Delivery Month', 'Supplier Name'
+            var pvtData = new PivotData(
+            	new []{"Delivery Year", "Delivery Month", "Supplier Name"},
+            	new CountAggregatorFactory(), true);
+            pvtData.ProcessData( new DataTableReader(dataTbl) );  // real ADO.NET data reader can be used too
+            </code>
+            </example>
+            </para>
+            <para>
+            Measure aggregation logic is controlled by <see cref="T:NReco.PivotData.IAggregatorFactory"/> implementations (each measure is represented by <see cref="T:NReco.PivotData.IAggregator"/> instance).
+            Several measures may be calculated at once using <see cref="T:NReco.PivotData.CompositeAggregatorFactory"/>:
+            <code>var pvtData = new PivotData(
+            	new string[]{"country","product"},
+            	new CompositeAggregatorFactory(
+            		new CountAggregatorFactory(),
+            		new SumAggregatorFactory("amount")
+            	), true );</code>
+            In this case individual measure values may be accessed in the following way:
+            <code>var compositeAggr = pvtData["USA",null].AsComposite();
+            var countValue = compositeAggr.Aggregators[0].Value; // refers to CountAggregator
+            var sumValue = compositeAggr.Aggregators[1].Value; // refers to SumAggregator 
+            </code>
+            </para>
+            </remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.Dimensions">
+            <summary>
+            Gets dimension identifiers of the multidimensional dataset.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.AggregatorFactory">
+            <summary>
+            Gets <see cref="T:NReco.PivotData.IAggregatorFactory"/> instance used for creating measure value aggregators.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.LazyTotals">
+            <summary>
+            Determines totals calculation mode. Lazy means that all totals/sub-totals are calculated on first use; otherwise totals/sub-totals are calculated on-the-fly. 
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.LazyAdd">
+            <summary>
+            Determines behaviour when non-existing key is accessed (true by default).
+            </summary>
+            <remarks>If <see cref="P:NReco.PivotData.PivotData.LazyAdd"/> is <code>true</code> new aggregator is created and added to the values list in case of non-existing key access. If <code>false</code> <see cref="P:NReco.PivotData.PivotData.Item(System.Object[])"/> will return <code>null</code>.</remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.AllValues">
+            <summary>
+            Get all datapoints (dim keys -> aggregator pairs) contained in the <see cref="T:NReco.PivotData.PivotData"/> (including totals).
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.Count">
+            <summary>
+            Gets the number of unique data point of this multidimensional dataset (calculated data points like totals are not included).
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.Item(NReco.PivotData.ValueKey)">
+            <summary>
+            Gets value by specified multidimensional key.
+            </summary>
+            <param name="vk">multidimensional key</param>
+            <returns>matched measure <see cref="T:NReco.PivotData.IAggregator"/> instance or empty aggregator</returns>
+        </member>
+        <member name="P:NReco.PivotData.PivotData.Item(System.Object[])">
+            <summary>
+            Gets aggegator by specified dimensions keys
+            </summary>
+            <param name="dimKeys">list of dimension keys</param>
+            <returns>matched <see cref="T:NReco.PivotData.IAggregator"/> instance or empty aggregator</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions and aggregator.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of fields)</param>
+            <param name="aggregator">measure aggregators factory</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions, aggregator and lazy totals mode.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension elements)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="lazyTotals">if true totals are calculated on-the-fly when accessed for the first time; otherwise they are calculated during data processing</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions, aggregator and processes specified data.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension elements)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="data">data represented by dictionary enumeration</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}},System.Boolean)">
+            <summary>
+            Initializes new instance of <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions, aggregator, lazy totals mode and processes specified data.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension elements)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="data">data represented by dictionary enumeration</param>
+            <param name="lazyTotals">if true totals are calculated on-the-fly when accessed for the first time</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Data.IDataReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions, aggregator and processes data from data reader.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension fields)</param>
+            <param name="aggregator">aggregator factory component</param>
+            <param name="dataReader">data represented by <see cref="T:System.Data.IDataReader"/> instance</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Data.IDataReader,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions configuration, aggregator, lazy totals mode and  and processes data from data reader.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension fields)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="dataReader">data represented by <see cref="T:System.Data.IDataReader"/> instance</param>
+            <param name="lazyTotals">if true totals are calculated on-the-fly when accessed for the first time</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Collections.IEnumerable,System.Func{System.Object,System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions, aggregator, and processes data from enumeration.
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension fields)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="data">data enumeration</param>
+            <param name="getValue">record field value accessor delegate</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.#ctor(System.String[],NReco.PivotData.IAggregatorFactory,System.Collections.IEnumerable,System.Func{System.Object,System.String,System.Object},System.Boolean)">
+            <summary>
+            Initializes new instance of <see cref="T:NReco.PivotData.PivotData"/> with specified dimensions configuration and calculates values for specified data
+            </summary>
+            <param name="dimensions">dimensions configuration (array of dimension fields)</param>
+            <param name="aggregator">measure aggregators factory</param>
+            <param name="data">data enumeration</param>
+            <param name="getValue">record field value accessor delegate</param>
+            <param name="lazyTotals">if true totals are calculated on-the-fly when accessed for the first time</param> 
+        </member>
+        <member name="M:NReco.PivotData.PivotData.GetDimensionKeys">
+            <summary>
+            Returns keys of all <see cref="T:NReco.PivotData.PivotData"/> dimensions
+            </summary>
+            <returns>array of keys for all <see cref="T:NReco.PivotData.PivotData"/> dimensions</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.GetDimensionKeys(System.String[])">
+            <summary>
+            Returns keys of specified dimensions
+            </summary>
+            <param name="dims">list of dimensions</param>
+            <returns>array of keys for specified dimensions</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.GetDimensionKeys(System.String[],System.Collections.Generic.IComparer{System.Object}[])">
+            <summary>
+            Returns keys of specified dimensions
+            </summary>
+            <param name="dims">list of dimensions</param>
+            <param name="dimSortComparers">list of comparers that should be used for sorting dimension keys</param>
+            <returns>array of keys for specified dimensions</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.GetState">
+            <summary>
+            Returns compacted state object that contains all values of this PivotData.
+            </summary>
+            <remarks>State object doesn't include any information about dimensions and aggregator factory. 
+            Calculated values (totals) are not included into state object.</remarks>
+            <returns>state object that can be serialized</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.SetState(NReco.PivotData.PivotDataState)">
+            <summary>
+            Restores PivotData from specified state object.
+            </summary>
+            <remarks>This method assumes that PivotData configuration (dimensions, aggregator factory) matches specified state object.</remarks>
+            <param name="state">state object</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.Clear">
+            <summary>
+            Removes all dimension keys and values from the <see cref="T:NReco.PivotData.PivotData"/>.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.ProcessData(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}})">
+            <summary>
+            Process data from specified list of dictionaries.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.ProcessData(System.Collections.Generic.IEnumerable{System.Data.DataRow})">
+            <summary>
+            Process data from specified sequence of DataRow objects.
+            </summary>
+            <remarks>
+            This method is not supported in netstandard1.5 build.
+            </remarks>		 
+        </member>
+        <member name="M:NReco.PivotData.PivotData.ProcessData(System.Data.IDataReader)">
+            <summary>
+            Processes data from the specified <see cref="T:System.Data.IDataReader"/>.
+            </summary>
+            <param name="dataReader">data reader instance</param>
+            <remarks>
+            Dimension names and field names specified for aggregators should correspond reader's column names.
+            <example>
+            How to pivot a DataTable:
+            <code>
+            DataTable tbl;  // this is table with columns: "col1", "col2", "value"
+            var pvtData = new PivotData( 
+              new []{"col1","col2"},
+              new SumAggregatorFactory("value") );
+            pvtData.ProcessData(new DataTableReader(tbl));
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.ProcessData(NReco.PivotData.IPivotData,System.String[])">
+            <summary>
+            Processes data from the specified <see cref="T:NReco.PivotData.IPivotData"/> instance and calculates <see cref="T:NReco.PivotData.PivotData"/> values
+            </summary>
+            <param name="data">input data represented by <see cref="T:NReco.PivotData.IPivotData"/> instance</param>
+            <param name="aggregatorNames">field names for accessing aggregator values</param>
+            <remarks>
+            This overload allows to use values of another data cube as input.
+            <example>
+            Lets assume that we need to calculate average over values that are calculated in another cube:
+            <code>
+            IPivotData sourcePvtData; // dimensions: "month", "store" and one sum measure
+            var pvtData = new PivotData(new[] {"store"}, new AverageAggregatorFactory("value") );
+            pvtData.ProcessData(sourcePvtData, "value");
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.ProcessData(System.Collections.IEnumerable,System.Func{System.Object,System.String,System.Object})">
+            <summary>
+            Processes data from enumerable data.
+            </summary>
+            <param name="data"><see cref="T:System.Collections.IEnumerable"/> data stream</param>
+            <param name="getValue">accessor used for getting field values from iterated objects</param>
+            <remarks>
+            When LazyTotals=False and <see cref="M:NReco.PivotData.PivotData.ProcessData(System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{System.String,System.Object}})"/> is called for the first time 
+            all dimension totals are calculated for a whole batch. For all next calls totals are updated incrementally.
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.PivotData.Merge(NReco.PivotData.IPivotData)">
+            <summary>
+            Modifies the current <see cref="T:NReco.PivotData.PivotData"/> object to merge values from itself and specified <see cref="T:NReco.PivotData.PivotData"/>.
+            </summary>
+            <remarks>
+            Only compatible <see cref="T:NReco.PivotData.PivotData"/> objects could be merged: they should have the same AggregatorFactory and Dimensions configuration.
+            This method is also useful for organizing parallel data aggregation algorithm.
+            </remarks>
+            <param name="pvtData">multidimensional dataset to merge</param>
+        </member>
+        <member name="T:NReco.PivotData.PivotDataHelper">
+            <summary>
+            Utility routines for <see cref="T:NReco.PivotData.IPivotData"/> implementations.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotDataHelper.GetDimensionType(System.Collections.IEnumerable)">
+            <summary>
+            Suggest dimension type by key values.
+            </summary>
+            <param name="dimKeys">dimension keys</param>
+            <returns>type compatible with all keys or string type</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotDataHelper.GetDimensionKeys(NReco.PivotData.IPivotData,System.String[],System.Collections.Generic.IComparer{System.Object}[])">
+            <summary>
+            Returns unique keys of specified dimensions for the <see cref="T:NReco.PivotData.IPivotData"/> instance.
+            </summary>
+            <param name="pvtData"><see cref="T:NReco.PivotData.IPivotData"/> instance</param>
+            <param name="dims">list of dimensions</param>
+            <param name="dimSortComparers">list of comparers that should be used for sorting dimension keys</param>
+            <returns>array of keys for specified dimensions</returns>
+        </member>
+        <member name="T:NReco.PivotData.PivotDataState">
+            <summary>
+            Represents compacted "raw" pivot data values for serialization
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.PivotDataState.DimCount">
+            <summary>
+            Number of dimensions
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.PivotDataState.KeyValues">
+            <summary>
+            Ordered list of key values
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.PivotDataState.ValueKeys">
+            <summary>
+            Ordered list of value keys (each key is represented by array of key indexes)
+            </summary>
+        </member>
+        <member name="F:NReco.PivotData.PivotDataState.Values">
+            <summary>
+            Ordered list of PivotData "values" represented by aggregator's state objects
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotDataState.Deserialize(System.IO.Stream)">
+            <summary>
+            Deserializes <see cref="T:NReco.PivotData.PivotDataState"/> from binary data contained by the specified stream
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> that contains serialized <see cref="T:NReco.PivotData.PivotDataState"/> data</param>
+            <returns>deserialized <see cref="T:NReco.PivotData.PivotDataState"/> instance</returns>
+            <remarks>
+            This method is not supported in .NET Standards (.NET Core) PivotData build (use Json.NET or protobuf-net instead).
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.PivotDataState.Serialize(System.IO.Stream)">
+            <summary>
+            Serializes <see cref="T:NReco.PivotData.PivotDataState"/> into specified <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> used to write the data</param>
+            <remarks>
+            This method is not supported in .NET Standards (.NET Core) PivotData build (use Json.NET or protobuf-net instead).
+            </remarks>		 
+        </member>
+        <member name="T:NReco.PivotData.PivotTable">
+            <summary>
+            Represents 2D Pivot Table view for multidimensional array (<see cref="T:NReco.PivotData.IPivotData"/>).
+            </summary>
+            <remarks>
+            PivotTable provides an API for building pivot table report from multidimensional array represented by <see cref="T:NReco.PivotData.IPivotData"/> instance.
+            Configuration is rather simple: all it needs is a list of dimensions for building rows and columns 
+            (it may use only subset of dimensions available in specified <see cref="P:NReco.PivotData.PivotTable.PivotData"/> instance). Also it supports table sorting by
+            column or row values (or by totals). 
+            <example>
+            The following code snippet illustrates how to use <see cref="T:NReco.PivotData.PivotTable"/>:
+            <code>
+            PivotData pvtData; 
+            var pvtTbl = new PivotTable(
+            	new [] {"country", "city" }, // rows are cities grouped by country
+            	new [] {"company"},  // columns are companines
+            	pvtData);
+            for (var r=0; r&lt;pvtTbl.RowKeys.Length; r++) {
+            	for (var c=0; c&lt;pvtTbl.ColumnKeys.Length; c++) {
+            		Console.Write("{0}\t", pvtTbl[r,c].Value);
+            	}
+            	Console.WriteLine();
+            }
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.Columns">
+            <summary>
+            Dimensions used for building columns of the pivot table
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.Rows">
+            <summary>
+            Dimensions used for building rows of the pivot table 
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.ColumnKeys">
+            <summary>
+            Dimension keys that represent columns of the pivot table
+            </summary>
+            <remarks>These keys are used for iterating by pivot table columns indexes. 
+            Order of table columns can be easily changed by reordering of <see cref="P:NReco.PivotData.PivotTable.ColumnKeys"/> array.</remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.RowKeys">
+            <summary>
+            Dimension keys that represent rows of the pivot table
+            </summary>
+            <remarks>These keys are used for iterating by pivot table rows indexes. 
+            Order of table rows can be easily changed by reordering of <see cref="P:NReco.PivotData.PivotTable.ColumnKeys"/> array.</remarks> 
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.PreserveGroupOrder">
+            <summary>
+            Gets or sets flag that preserves grouping order when <see cref="M:NReco.PivotData.PivotTable.SortRowKeys(System.Nullable{System.Int32},System.ComponentModel.ListSortDirection)"/> or <see cref="M:NReco.PivotData.PivotTable.SortColumnKeys(System.Nullable{System.Int32},System.ComponentModel.ListSortDirection)"/> is called (false by default).
+            </summary>
+            <remarks>When pivot table is sorted by values this may break labels grouping. 
+            This option keeps labels grouping by sorting values only inside groups.</remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.TotalsCache">
+            <summary>
+            Controls totals cache usage (true by default). 
+            </summary>
+            <remarks>If <see cref="P:NReco.PivotData.PivotTable.TotalsCache"/> is <code>true</code> PivotTable will use <see cref="T:NReco.PivotData.TotalsCachePivotData"/> wrapper for efficient totals calculation.</remarks>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.PivotData">
+            <summary>
+            Gets the <see cref="T:NReco.PivotData.IPivotData"/> used for building pivot table.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.#ctor(System.String[],System.String[],NReco.PivotData.IPivotData)">
+            <summary>
+            Initializes a new instance of <see cref="T:NReco.PivotData.PivotTable"/> instance by specified <see cref="P:NReco.PivotData.PivotTable.PivotData"/>
+            </summary>
+            <param name="rows">list of dimensions for determining table rows</param>
+            <param name="columns">list of dimensions for determining table columns</param>
+            <param name="pvtData">multidimensional dataset used for pivot table calculation</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.#ctor(System.String[],System.String[],NReco.PivotData.IPivotData,System.Collections.Generic.IComparer{NReco.PivotData.ValueKey},System.Collections.Generic.IComparer{NReco.PivotData.ValueKey})">
+            <summary>
+            Initializes a new instance of <see cref="T:NReco.PivotData.PivotTable"/> instance by specified <see cref="P:NReco.PivotData.PivotTable.PivotData"/>
+            </summary>
+            <param name="rows">list of dimensions for determining table rows</param>
+            <param name="columns">list of dimensions for determining table columns</param>
+            <param name="pvtData">multidimensional dataset used for pivot table calculation</param>
+            <param name="rowKeysComparer">custom table row keys comparer (if null <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> is used)</param>
+            <param name="colKeysComparer">custom table row keys comparer (if null <see cref="T:NReco.PivotData.NaturalSortKeyComparer"/> is used)</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortKeys(NReco.PivotData.ValueKey[],System.String[],System.Collections.Generic.IComparer{NReco.PivotData.ValueKey})">
+            <summary>
+            Performs inital ordering of pivot table rows/columns keys 
+            </summary>
+            <param name="keys">array of pivot table axis (rows or columns) keys</param> 
+            <param name="dimensions">array of dimensions for given keys</param>
+            <remarks>
+            This method is called for initial ordering of pivot table rows and columns. 
+            It may be overrided in inherited class if custom ordering logic should be applied 
+            (note that custom sort also can be applied by ordering <see cref="P:NReco.PivotData.PivotTable.ColumnKeys"/> and <see cref="P:NReco.PivotData.PivotTable.RowKeys"/> properites.
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortRowKeys(System.Nullable{System.Int32},System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort rows by specified column values.
+            </summary>
+            <param name="columnIndex">column index (use null to sort by totals)</param>
+            <param name="sortDirection">sort direction (asc by default)</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortRowKeys(System.Nullable{System.Int32},System.Int32,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort rows by specified column values.
+            </summary>
+            <param name="columnIndex">column index (use null to sort by totals)</param>
+            <param name="measureIndex">measure index (applicable only for cubes with several measures)</param>
+            <param name="sortDirection">sort direction (asc by default)</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortRowKeysByColumnKey(NReco.PivotData.ValueKey,System.Int32,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort rows by specified column key.
+            </summary>
+            <param name="colKey">column key (use null to sort by totals)</param>
+            <param name="measureIndex">measure (aggregator) index</param>
+            <param name="sortDirection">sort direction (asc by default)</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortColumnKeys(System.Nullable{System.Int32},System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort columns by specified row values.
+            </summary>
+            <param name="rowIndex">row index (use null to sort by totals)</param>
+            <param name="sortDirection">sort direction</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortColumnKeys(System.Nullable{System.Int32},System.Int32,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort columns by specified row values
+            </summary>
+            <param name="rowIndex">row index (use null to sort by totals)</param>
+            <param name="measureIndex">measure index (applicable only for cubes with several measures)</param>	 
+            <param name="sortDirection">sort direction</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.SortColumnKeysByRowKey(NReco.PivotData.ValueKey,System.Int32,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort columns by specified row key.
+            </summary>
+            <param name="rowKey">row key (use null to sort by totals)</param>
+            <param name="measureIndex">measure index (applicable only for cubes with several measures)</param>	 
+            <param name="sortDirection">sort direction</param>
+        </member>
+        <member name="P:NReco.PivotData.PivotTable.Item(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Gets aggregator for specified row and column indexes
+            </summary>
+            <param name="row">row index (can be null for totals)</param>
+            <param name="col">column index (can be null for totals)</param>
+            <returns>aggregator for row x column intersection</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotTable.GetValue(NReco.PivotData.ValueKey,NReco.PivotData.ValueKey)">
+            <summary>
+            Gets value for specified row and column keys. 
+            </summary>
+            <param name="rowKey">row key (use partial key for sub-totals)</param>
+            <param name="colKey">column key (use partial key for sub-totals)</param>
+            <returns>aggregator for row x column intersection</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:NReco.PivotData.PivotTableMD" -->
+        <member name="P:NReco.PivotData.PivotTableMD.Axes">
+            <summary>
+            Dimensions used for building axes of n-Dimensional Pivot Table view
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotTableMD.AxesKeys">
+            <summary>
+            Dimension keys that represent axes of n-Dimensional Pivot Table view
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.PivotTableMD.PivotData">
+            <summary>
+            Gets the <see cref="T:NReco.PivotData.IPivotData"/> used for building pivot table.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.PivotTableMD.#ctor(System.String[][],NReco.PivotData.IPivotData)">
+            <summary>
+            Initializes new instance of <see cref="T:NReco.PivotData.PivotTable"/> instance by specified <see cref="P:NReco.PivotData.PivotTableMD.PivotData"/>
+            </summary>
+            <param name="axes">list of axes determined by dimensions</param>
+            <param name="pvtData">multidimensional dataset used for pivot table calculation</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTableMD.#ctor(System.String[][],NReco.PivotData.IPivotData,System.Collections.Generic.IComparer{NReco.PivotData.ValueKey}[])">
+            <summary>
+            Initializes new instance of <see cref="T:NReco.PivotData.PivotTable"/> instance by specified <see cref="P:NReco.PivotData.PivotTableMD.PivotData"/>
+            </summary>
+            <param name="axes">list of axes determined by dimensions</param>
+            <param name="dataCube">multidimensional dataset used for calculating pivot table</param>
+            <param name="axesComparers">list of custom comparers for sorting axes keys</param>
+        </member>
+        <member name="M:NReco.PivotData.PivotTableMD.GetSortValue(NReco.PivotData.IAggregator)">
+            <summary>
+            Returns sortable value from specified <see cref="T:NReco.PivotData.IAggregator"/> instance
+            </summary>
+            <param name="aggr">aggregator</param>
+            <returns>value used by <see cref="M:NReco.PivotData.PivotTableMD.SortAxisKeys(System.Int32,System.Nullable{System.Int32}[],System.ComponentModel.ListSortDirection)"/> for sorting</returns>
+        </member>
+        <member name="M:NReco.PivotData.PivotTableMD.SortAxisKeys(System.Int32,System.Nullable{System.Int32}[],System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sort axis keys by datapoint values
+            </summary>
+            <param name="axisToSort">axis index of keys to sort</param>
+            <param name="otherCoords">data point indexes used for determining sort values (null index means totals value by that axis)</param>
+            <param name="sortDirection">sort direction (asc by default)</param>
+        </member>
+        <member name="P:NReco.PivotData.PivotTableMD.Item(System.Nullable{System.Int32}[])">
+            <summary>
+            Gets aggregator for specified axes indexes
+            </summary>
+            <param name="coords">data point indexes</param>
+            <returns>aggregator for requested data point</returns>
+        </member>
+        <member name="T:NReco.PivotData.QuantileAggregator">
+            <summary>
+            Implements a quantile aggregator: calculates median or specified quantile value.
+            </summary>
+            <remarks>
+            Quantile is calculated as average of 2 elements.  <see cref="T:NReco.PivotData.QuantileAggregator"/> can be used only with numeric values that may be coverted to System.Decimal.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.QuantileAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.QuantileAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.SliceQuery">
+            <summary>
+            Represents a query operation over specified <see cref="T:NReco.PivotData.IPivotData"/> instance.
+            </summary>
+            <remarks>
+            SliceQuery can be used for querying data cube (slice, dice, roll-up). 
+            <example>
+            Lets assume that we have some cube that represents sales data with the following dimensions: 
+            "year", "month", "day", "country", "product" and 2 measures collected with <see cref="T:NReco.PivotData.CountAggregatorFactory"/> (=count of orders) and
+            <see cref="T:NReco.PivotData.SumAggregatorFactory"/> (= sum of sales amount):
+            <code>var salesCube = new PivotData(
+            	new [] {"year","month","day","country","product"},
+            	new CompositeAggregatorFactory(
+            		new CountAggregatorFactory(),
+            		new SumAggregatorFactory("amount")
+            	), true );</code>
+            The following query illustrates how to reduce number of dimensions, filter by specific dimension values 
+            and get resulting <see cref="T:NReco.PivotData.PivotData"/> with single measure:
+            <code>var q = new SliceQuery(salesCube)
+            	.Dimension("year")
+            	.Dimension("country")
+            	.Dimension("product")
+            	.Where("country", new[]{"USA","Canada"})
+            	.Measure(1);
+            var salesAmountForUsaAndCanada = q.Execute(true);
+            </code>
+            Resulting data cube will contain only specified dimensions, "country" dimension will contain only "USA" and "Canada" keys
+            and only one measure (index=1 refers to SumAggregatorFactory("amount")).
+            </example>
+            <example>
+            SliceQuery can be used in the more complex filtering cases; lets calculate derived dimension and skip all days with &lt;10 orders:
+            <code>var q = new SliceQuery(salesCube)
+            	.Dimension("year")
+            	.Dimension("quarter", (dimKeys) => {  
+            		var month = Convert.ToInt32( dimKeys[1] ); // "month" dimension index
+            		return (int)Math.Ceiling((float)(month)/3);
+            	}).Where( (dataPoint) => {
+            		var compositeAggr = dataPoint.Value.AsComposite(); // CompositeAggregator is used if cube has >1 measure
+            		var countOrders = Convert.ToInt32( compositeAggr.Aggregators[0].Value );
+            		return countOrders&gt;=10; // include data point by custom condition
+            	});
+            var bigSalesByYearAndQuarter = q.Execute(true);
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.#ctor(NReco.PivotData.IPivotData)">
+            <summary>
+            Initializes new slicing query to specified <see cref="T:NReco.PivotData.PivotData"/> instance.
+            </summary>
+            <param name="pvtData">multidimensional dataset to query</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Execute">
+            <summary>
+            Execute the query and return operation result as new <see cref="T:NReco.PivotData.PivotData"/> instance.
+            </summary>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Execute(System.Boolean)">
+            <summary>
+            Execute the query and return operation result as new <see cref="T:NReco.PivotData.PivotData"/> instance.
+            </summary>
+            <param name="lazyTotals"></param>
+            <returns>data cube that represents query results.</returns>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Dimension(System.String)">
+            <summary>
+            Define dimension to select in result of this query.
+            </summary>
+            <param name="dimension">Dimension from context <see cref="T:NReco.PivotData.PivotData"/> dimensions</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Dimension(System.String,System.Func{System.Object[],System.Object})">
+            <summary>
+            Define dimension constructed from keys of existing dimensions. 
+            </summary>
+            <param name="dimension">new dimension to construct</param>
+            <param name="getDimensionKey">a function that returns dimension key by data point key</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Measure(System.Int32)">
+            <summary>
+            Define measure aggregator at specified index to select in result of this query.
+            </summary>
+            <param name="index">index of measure in the composite aggregator</param>
+            <remarks>This selector is applicable only for cubes configured with <see cref="T:NReco.PivotData.CompositeAggregatorFactory"/>.</remarks>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Measure(NReco.PivotData.IAggregatorFactory,System.Func{NReco.PivotData.IAggregator,NReco.PivotData.IAggregator})">
+            <summary>
+            Define new measure aggregator calculated from existing cube measure(s).
+            </summary>
+            <param name="aggrFactory">new measure aggregator factory</param>
+            <param name="createMeasure">handler that creates new measure aggregator.</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Measure(NReco.PivotData.IAggregatorFactory,System.Func{System.Collections.Generic.KeyValuePair{System.Object[],NReco.PivotData.IAggregator},NReco.PivotData.IAggregator})">
+            <summary>
+            Define new measure aggregator calculated from existing cube measure(s).
+            </summary>
+            <param name="aggrFactory">new measure aggregator factory</param>
+            <param name="createMeasure">handler that creates new measure aggregator by the data point (key and value).</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Measure(System.String,System.Func{NReco.PivotData.IAggregator[],System.Object},System.Int32[])">
+            <summary>
+            Define formula measure.
+            </summary>
+            <param name="measureName">name of the measure that describes formula value meaning</param>
+            <param name="formulaValue">delegate that calculates formula value</param>
+            <param name="parentMeasureIndexes">indexes of existing measures used as formula parameters</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Where(System.String,System.Object[])">
+            <summary>
+            Filters dimension keys by explicit list of values.
+            </summary>
+            <param name="dimension">dimension to filter</param>
+            <param name="filterKeys">allowed list of dimension keys</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Where(System.String,System.Func{System.Object,System.Boolean})">
+            <summary>
+            Filters dimension keys based on a predicate.
+            </summary>
+            <param name="dimension">dimension to filter</param>
+            <param name="predicate">a function to test dimension key for a condition.</param>
+        </member>
+        <member name="M:NReco.PivotData.SliceQuery.Where(System.Func{System.Collections.Generic.KeyValuePair{System.Object[],NReco.PivotData.IAggregator},System.Boolean})">
+            <summary>
+            Filters data points based on a predicate.
+            </summary>
+            <param name="predicate">a function to test data point for a condition.</param>
+        </member>
+        <member name="T:NReco.PivotData.SortAsComparer">
+            <summary>
+            Comparer for custom keys order defined by explicit list.
+            </summary>
+            <example>
+            var statusDimCmp = new SortAsComparer( new [] { "New", "Open", "Closed" } );
+            </example>
+        </member>
+        <member name="T:NReco.PivotData.SumAggregator">
+            <summary>
+            Implements a sum aggregator
+            </summary>
+            <remarks>
+            SumAggregator can be used only with numeric values that may be coverted to System.Decimal.
+            </remarks>	
+        </member>
+        <member name="T:NReco.PivotData.SumAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.SumAggregator"/> factory component
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.ValueKey">
+            <summary>
+            Represents key for a multidimensional value.
+            </summary>
+        </member>
+        <member name="P:NReco.PivotData.ValueKey.HasEmpty">
+            <summary>
+            Check if at least one dimension key is empty
+            </summary>
+        </member>
+        <member name="T:NReco.PivotData.VarianceAggregator">
+            <summary>
+            Implements a variance aggregator (calculates mean, variance, sample variance, standard deviation)
+            </summary>
+            <remarks>
+            VarianceAggregator can be used only with numeric values that may be coverted to System.Double.
+            </remarks>
+        </member>
+        <member name="T:NReco.PivotData.VarianceAggregatorFactory">
+            <summary>
+            <see cref="T:NReco.PivotData.VarianceAggregator"/> factory component
+            </summary>
+        </member>
+    </members>
+</doc>
